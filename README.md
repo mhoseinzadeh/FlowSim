@@ -1,12 +1,14 @@
 # Visual FlowSim: Flow-based Simulation Methodology Demonstration
 This program demonstrates how flow-based simulation works. Two small examples are provided for understanding the mechanism.
-
 Please cite the following paper:
+
   Hoseinzadeh, Morteza, "Flow-based Simulation Methodology," IEEE Computer Architecture Letters, Sep 2017.
   
 ## Requirements
   This application is built with Qt (for windows it is with MinGW). You can download an open-source version of Qt via the following link:
+  
     https://www1.qt.io/download-open-source/
+    
   To modify input file, we recommend using Notepad++. A highlighter file is provided in examples folder.
   
 ## Flow Language
