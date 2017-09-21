@@ -16,4 +16,6 @@ Please cite the following paper:
   A flow can be defined in 2 different types: `serial` and `concurrent`. Each block may contain only one flow. Each flow can have several blocks. There is a `conditional` block which allows us to pick a `case` with a certain probability.
   For more information, please see example files.
 
+## Screenshots
+![Snapshot](snapshots/snapshot.png?raw=true "A screenshot of the application")
 
