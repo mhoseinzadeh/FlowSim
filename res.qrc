@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="eye">res/eye.png</file>
+        <file alias="pencil">res/pencil.png</file>
+        <file alias="about">res/about.png</file>
+        <file alias="last">res/last.png</file>
+        <file alias="next">res/next.png</file>
+        <file alias="open">res/open.png</file>
+        <file alias="play">res/play-all.png</file>
+        <file alias="playn">res/playexact.png</file>
+        <file alias="playu">res/playupto.png</file>
+        <file alias="reset">res/reset.png</file>
+    </qresource>
+</RCC>

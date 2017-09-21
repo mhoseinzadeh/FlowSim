@@ -1,0 +1,80 @@
+// This example shows a simple data acquisition system
+// which reads 3 digital signals from 3 distinct sensors
+// and displays the values on a screen
+
+concurrent {                    // The whole system
+    Sensor1 _ {                 // The first sensor for reading tempurature
+        serial {
+            S1.R 5;             // Reading the tempurature from the environment which takes 5 ticks
+            S1.D 1;             // Analog-to-Digital Conversion (1 tick)
+            S1.W rand 1 2 {     // Communicating with the Processor and writing to port A
+                write P.A 2;    // Write to port A which takes 2 ticks
+            }
+            repeat 0;
+        }
+    }
+    Sensor2 _ {                 // The second sensor for reading tempurature
+        serial {
+            S2.R 5;             // Reading the tempurature from the environment which takes 5 ticks
+            S2.D 1;             // Analog-to-Digital Conversion (1 tick)
+            S2.W rand 1 2 {     // Communicating with the Processor and writing to port B
+                write P.B 2;    // Write to port B which takes 2 ticks
+            }
+            repeat 0;
+        }
+    }
+    Sensor3 _ {                 // The second sensor for reading tempurature
+        serial {
+            S3.R 5;             // Reading the tempurature from the environment which takes 5 ticks
+            S3.D 1;             // Analog-to-Digital Conversion (1 tick)
+            S3.W rand 1 3 {     // Communicating with the Processor and writing to port C
+                write P.C 2;    // Write to port C which takes 2 ticks
+            }
+            repeat 0;
+        }
+    }
+    Processor _ {
+        concurrent {
+            Thread0 _ {
+                read P.A 1;             // Read port A taking 1 tick
+                E.A 1;                  // Execute some calculations of A
+                
+                read P.B 1;             // Read port B taking 1 tick
+                E.B 1;                  // Execute some calculations of B
+                
+                read P.C 1;             // Read port C taking 1 tick
+                E.C 1;                  // Execute some calculations of C
+                write buff 1;           // Write to the a buffer
+                
+                repeat 0;
+            }
+            Thread1 _ {
+                read buff 1;            // Read the buffer
+                D.com 3 {               // Communicate with the display device
+                    write D.buff 2;     // Write to the display buffer
+                    write D.sig 2;      // Send signal to the display device
+                }
+                repeat 0;
+            }
+        }
+    }
+    Display _ {
+        read D.sig 1;  // Wait for a signal
+        read D.buff 1; // Read the display buffer
+        U 2;           // Update display
+        repeat 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,262 @@
+concurrent {                    // 4-core processor
+    Core1 _ {
+        serial {
+            C1.Fetch _ {
+                C1.F 1;    // Check reorder buffer to fetch the instruction
+                conditional {
+                    case 75 {           // With probability of 75%, the instruction is in the buffer
+                        read C1.buff 1;  // Read from buffer
+                    }
+                    case 25 {                       // With the probability of 25%, it needs to fetch the instruction from the cache
+                        conditional {
+                            case 97 {               // L1 instruction cache hit-ratio is 97%
+                                read C1.L1.inst 4;  // Read from Core 1 L1 instruction cache
+                            }
+                            case 3 {                // Cache miss happened
+                                conditional {
+                                    case 95 {       // L2 cache hit-ratio is 95%
+                                        read L2 12; // Read from shared L2
+                                    }
+                                    case 5 {
+                                        read Mem 45; // Read from the main memory
+                                        write L2 12; // Update L2 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            C1.Decode 1;    
+            C1.Execute 1;   
+            conditional {   // Data access
+                case 30 {   // We consider 70% of the instrutions are arithmetic and 30% is data
+                    conditional {
+                        case 95 {               // L1 data cache hit-ratio is 95%
+                            read C1.L1.data 4;  // Read from data cache
+                            conditional {
+                                case 50 {
+                                    write C1.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                        case 5 {                // Cache miss 5%
+                            conditional {
+                                case 95 {       // L2 cache hit-ratio is 95%
+                                    read L2 12; // Read from shared L2
+                                }
+                                case 5 {
+                                    read Mem 45; // Read from the main memory
+                                    write L2 12; // Update L2
+                                }
+                            }
+                            read C1.L1.data 4;  // update the cache
+                            conditional {
+                                case 50 {
+                                    write C1.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            repeat 0;
+        }
+    }
+    
+    Core2 _ {
+        serial {
+            C2.Fetch _ {
+                C2.F 1;    // Check reorder buffer to fetch the instruction
+                conditional {
+                    case 75 {           // With probability of 75%, the instruction is in the buffer
+                        read C2.buff 1;  // Read from buffer
+                    }
+                    case 25 {                       // With the probability of 25%, it needs to fetch the instruction from the cache
+                        conditional {
+                            case 97 {               // L1 instruction cache hit-ratio is 97%
+                                read C2.L1.inst 4;  // Read from Core 1 L1 instruction cache
+                            }
+                            case 3 {                // Cache miss happened
+                                conditional {
+                                    case 95 {       // L2 cache hit-ratio is 95%
+                                        read L2 12; // Read from shared L2
+                                    }
+                                    case 5 {
+                                        read Mem 45; // Read from the main memory
+                                        write L2 12; // Update L2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            C2.Decode 1;    
+            C2.Execute 1;   
+            conditional {   // Data access
+                case 30 {   // We consider 70% of the instrutions are arithmetic and 30% is data
+                    conditional {
+                        case 95 {               // L1 data cache hit-ratio is 95%
+                            read C2.L1.data 4;  // Read from data cache
+                            conditional {
+                                case 50 {
+                                    write C2.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                        case 5 {                // Cache miss 5%
+                            conditional {
+                                case 95 {       // L2 cache hit-ratio is 95%
+                                    read L2 12; // Read from shared L2
+                                }
+                                case 5 {
+                                    read Mem 45; // Read from the main memory
+                                    write L2 12; // Update L2
+                                }
+                            }
+                            read C2.L1.data 4;  // update the cache
+                            conditional {
+                                case 50 {
+                                    write C2.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            repeat 0;
+        }
+    }
+    
+    Core3 _ {
+        serial {
+            C3.Fetch _ {
+                C3.F 1;    // Check reorder buffer to fetch the instruction
+                conditional {
+                    case 75 {           // With probability of 75%, the instruction is in the buffer
+                        read C3.buff 1;  // Read from buffer
+                    }
+                    case 25 {                       // With the probability of 25%, it needs to fetch the instruction from the cache
+                        conditional {
+                            case 97 {               // L1 instruction cache hit-ratio is 97%
+                                read C3.L1.inst 4;  // Read from Core 1 L1 instruction cache
+                            }
+                            case 3 {                // Cache miss happened
+                                conditional {
+                                    case 95 {       // L2 cache hit-ratio is 95%
+                                        read L2 12; // Read from shared L2
+                                    }
+                                    case 5 {
+                                        read Mem 45; // Read from the main memory
+                                        write L2 12; // Update L2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            C3.Decode 1;    
+            C3.Execute 1;   
+            conditional {   // Data access
+                case 30 {   // We consider 70% of the instrutions are arithmetic and 30% is data
+                    conditional {
+                        case 95 {               // L1 data cache hit-ratio is 95%
+                            read C3.L1.data 4;  // Read from data cache
+                            conditional {
+                                case 50 {
+                                    write C3.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                        case 5 {                // Cache miss 5%
+                            conditional {
+                                case 95 {       // L2 cache hit-ratio is 95%
+                                    read L2 12; // Read from shared L2
+                                }
+                                case 5 {
+                                    read Mem 45; // Read from the main memory
+                                    write L2 12; // Update L2
+                                }
+                            }
+                            read C3.L1.data 4;  // update the cache
+                            conditional {
+                                case 50 {
+                                    write C3.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            repeat 0;
+        }
+    }
+    
+    Core4 _ {
+        serial {
+            C4.Fetch _ {
+                C4.F 1;    // Check reorder buffer to fetch the instruction
+                conditional {
+                    case 75 {           // With probability of 75%, the instruction is in the buffer
+                        read C4.buff 1;  // Read from buffer
+                    }
+                    case 25 {                       // With the probability of 25%, it needs to fetch the instruction from the cache
+                        conditional {
+                            case 97 {               // L1 instruction cache hit-ratio is 97%
+                                read C4.L1.inst 4;  // Read from Core 1 L1 instruction cache
+                            }
+                            case 3 {                // Cache miss happened
+                                conditional {
+                                    case 95 {       // L2 cache hit-ratio is 95%
+                                        read L2 12; // Read from shared L2
+                                    }
+                                    case 5 {
+                                        read Mem 45; // Read from the main memory
+                                        write L2 12; // Update L2
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            C4.Decode 1;    
+            C4.Execute 1;   
+            conditional {   // Data access
+                case 30 {   // We consider 70% of the instrutions are arithmetic and 30% is data
+                    conditional {
+                        case 95 {               // L1 data cache hit-ratio is 95%
+                            read C4.L1.data 4;  // Read from data cache
+                            conditional {
+                                case 50 {
+                                    write C4.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                        case 5 {                // Cache miss 5%
+                            conditional {
+                                case 95 {       // L2 cache hit-ratio is 95%
+                                    read L2 12; // Read from shared L2
+                                }
+                                case 5 {
+                                    read Mem 45; // Read from the main memory
+                                    write L2 12; // Update L2
+                                }
+                            }
+                            read C4.L1.data 4;  // update the cache
+                            conditional {
+                                case 50 {
+                                    write C4.L1.data 4;  // Write-back to data cache in 50% of times
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            repeat 0;
+        }
+    }
+    
+}
