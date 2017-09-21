@@ -20,7 +20,7 @@ void executeIgnoreList(std::function<void(Flow *)> removeFromList) {
             flow->repeat(true);
         } else {
             removeFromList(j->flow);
-            delete j->flow;
+            //delete j->flow;
             j->flow = flow->copy();
         }
     }
